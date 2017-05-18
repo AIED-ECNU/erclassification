@@ -1,15 +1,22 @@
 #encoding=utf-8
 import jieba
-f = open("D:\\222AI\\erclassification\\icedoc.txt","w") #读取文本
-f1 = f.read()
-seg_list = jieba.cut(f1, cut_all=True)
-f.write(seg_list)
-f.close()
-print ("Full Mode:", "/ ".join(seg_list) ) # 全模式
-seg_list = jieba.cut("我来到u北京清华大学", cut_all=False)
-print ("Default Mode:", "/ ".join(seg_list) ) # 精确模式
-seg_list = jieba.cut("戴尔公司将于５月１８日公布第一季度的财报。")  # 默认是精确模式
-print (", ".join(seg_list))
-seg_list = jieba.cut_for_search("你们好，市场竞争我是涂斌琴")  # 搜索引擎模式
-print( ", ".join(seg_list))
+import jieba.analyse
+import sys
+import codecs
+# f = open("icedoc.txt","r") #读取文本
+# for w in f:
+#     print(w)
+# f.close()
+# seg_list = jieba.cut_for_search(f)
+# f.write("")
+# print ( "/ ".join(seg_list) )
+with open('icedoc.txt', 'r') as f:
+    print(f.readlines())
+    w = f.read()
+for line in f.readlines():
+        print(line.strip())
+seg_list = jieba.cut_for_search(w)
+print ( "/ ".join(seg_list) )
+stoplist = {}.fromkeys([ line.strip() for line in open("stopword.txt") ])
+#stoplist = codecs.open('stopword.txt','r',encoding='utf8').readlines()如果文件不是utf8编码
 
