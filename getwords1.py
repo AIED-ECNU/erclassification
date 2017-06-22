@@ -4,8 +4,11 @@ import re
 from bs4 import BeautifulSoup
 
 url_list = []
-with open('grade1/grade1_link.txt','w') as f:
-    url_list = f.read()
+f = open('grade2/grade2_links.txt','r')
+for i in f.readlines():
+    url_list.append(i)
+f.close()
+print(url_list)
 for i in range(1,len(url_list)):
     # print(url_list[1])
     url = url_list[i]
@@ -20,7 +23,7 @@ for i in range(1,len(url_list)):
     for word in article:
         words = word.get_text('|', strip='True')  # 用get_text的方法获得爬虫内容
         print(words)
-    f = open("grade1/" + filepath, "w")
+    f = open("grade2/" + filepath, "w")
     f.write(words.encode('gbk','ignore').decode('gbk'))
     f.close()
 
