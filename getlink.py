@@ -3,31 +3,23 @@ import urllib.request
 import re
 from bs4 import BeautifulSoup
 
+url_list = []
+for page in range(1,46):
+    url = 'http://www.eduxiao.com/zuowen6/list_6_' + str(page) + '.html'
+    response = urllib.request.urlopen(url)
+    soup = BeautifulSoup(response, "lxml")
+    url_all = soup.find_all(class_="title")  # 找到超链接所在位置
+    # 获取<a href></a>中的URL
+    for each in url_all:
+        if str(each.get('href'))[:4] == 'http':  # get each中“href”的部分，在href中遇到了‘http’这4个字符，就取出来
+            url_list.append(each.get('href'))  # 加入url_list这个列表中
+
+f = open("grade6/grade6_links" , "w")# 把各个年级的链接写进文档中
+f.write(repr(url_list))
+f.close()
+print(url_list)
+print('end')
 
 
-url = 'http://www.eduxiao.com/zuowen1/'
-req = urllib.request.Request(url)
-con = urllib.request.urlopen(req)
-doc = con.read()
-con.close()
-doc = doc.decode('GBK')
-#  获取网页内的所有超链接
-# links = re.findall(r'href\=\"(http\:\/\/[a-zA-Z0-9\.\/]+)\"', doc)
-# for a in links:
-#     print(a)
-
-
-#获取<a href></a>中的URL，有用的代码
-# print (u'\n获取超链接:')
-# res_url = r"(?<=href=\").+?(?=\")|(?<=href=\').+?(?=\')"
-# link = re.findall(res_url ,  doc, re.I|re.S|re.M)
-# for url in link:
-#     print(url)
-
-url = "http://www.eduxiao.com/zuowen1.html"
-response = urllib.request.urlopen(url)
-soup = BeautifulSoup(response,"lxml")
-links = soup.find_all('a')#找到超链接所在位置
-print(links)
 
 
